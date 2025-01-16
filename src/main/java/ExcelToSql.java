@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExcelToSql {
-    public List<String> convert(String tableName) {
+    public List<String> convert(String tableName, String filePath) {
         List<String> result = new ArrayList<>();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(DBConfig.host,DBConfig.username,DBConfig.password);
             Statement stmt = conn.createStatement();
             String createTable = "create table if not exists " + tableName + "(";
-            File file = new File("Ledgers in Default Template.xlsx");
+            File file = new File(filePath);
             XSSFWorkbook xssfWorkbook = new XSSFWorkbook(file);
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
             Row header = sheet.getRow(0);
@@ -62,7 +62,7 @@ public class ExcelToSql {
             }
             System.out.println(insertStatement);
             PreparedStatement pstmt = conn.prepareStatement(insertStatement);
-            for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
                 Row currRow = sheet.getRow(i);
                 for (int j = 0; j < header.getPhysicalNumberOfCells(); j++) {
                     Cell currCell = currRow.getCell(j);

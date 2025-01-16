@@ -1,6 +1,6 @@
 public class Application {
     public static void main(String[] args) {
         ExcelToSql excelToSql = new ExcelToSql();
-        System.out.println(excelToSql.convert("abcd"));
+        System.out.println(excelToSql.convert("abcd","Ledgers in Default Template.xlsx"));
     }
 }
