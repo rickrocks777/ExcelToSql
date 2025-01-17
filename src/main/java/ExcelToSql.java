@@ -52,7 +52,7 @@ public class ExcelToSql {
             }
             insertStatement+= " values(";
             for (int i = 0; i < header.getPhysicalNumberOfCells(); i++) {
-                insertStatement+= "?";
+                insertStatement += "?";
                 if(i==header.getPhysicalNumberOfCells()-1) {
                     insertStatement+=")";
                 } else {
