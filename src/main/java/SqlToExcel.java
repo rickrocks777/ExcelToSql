@@ -34,6 +34,17 @@ public class SqlToExcel {
                 count++;
             }
             Set<Integer> keyset = map.keySet();
+            ResultSet headerRs = stmt.executeQuery("describe " + tableName);
+            List<String> headers = new ArrayList<>();
+            while (headerRs.next()) {
+                headers.add(headerRs.getString("Field"));
+            }
+            Row headerRow = sheet.createRow(0);
+            int headerCell = 0;
+            for(String header: headers) {
+                Cell fCell = headerRow.createCell(headerCell++);
+                fCell.setCellValue(header);
+            }
             int rownum =1;
             for (Integer key: keyset) {
                 Row row = sheet.createRow(rownum++);
